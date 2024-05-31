@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "de.aeksora.minecraftmmo.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MineMMOMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

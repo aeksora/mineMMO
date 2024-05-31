@@ -13,12 +13,15 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "de.aeksora.minecraftmmo.untitled.client.UntitledClient"
+      "de.aeksora.minecraftmmo.client.MineMMOClient"
     ],
     "main": [
-      "de.aeksora.minecraftmmo.untitled.Untitled"
+      "de.aeksora.minecraftmmo.MineMMO"
     ]
   },
+  "mixins": [
+    "minecraftmmo.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
