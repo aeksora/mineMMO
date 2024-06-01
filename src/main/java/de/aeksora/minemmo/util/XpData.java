@@ -13,8 +13,9 @@ public class XpData {
         int xp = nbt.getInt("xp");
         xp += amount;
 
-        nbt.putInt("xp", xp);
 
+
+        nbt.putInt("xp", xp);
         syncXp(xp, (ServerPlayerEntity) player);
         return xp;
     }
@@ -27,15 +28,19 @@ public class XpData {
         return amount;
     }
 
-    public static int removeXp(IEntityDataSaver player, int amount) {
+    public static boolean removeXp(IEntityDataSaver player, int amount) {
         NbtCompound nbt = player.getPersistentData();
         int xp = nbt.getInt("xp");
-        xp = Math.max(0, xp - amount);
 
-        nbt.putInt("xp", xp);
+        if (xp < amount) {
+            return false;
+        } else {
+            xp -= amount;
+            nbt.putInt("xp", xp);
 
-        syncXp(xp, (ServerPlayerEntity) player);
-        return xp;
+            syncXp(xp, (ServerPlayerEntity) player);
+            return true;
+        }
     }
 
     public static void syncXp(int xp, ServerPlayerEntity player) {

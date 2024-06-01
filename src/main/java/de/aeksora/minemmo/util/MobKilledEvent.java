@@ -1,12 +1,9 @@
 package de.aeksora.minemmo.util;
 
-import de.aeksora.minemmo.util.IEntityDataSaver;
-import de.aeksora.minemmo.util.XpData;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +18,7 @@ public class MobKilledEvent {
 
                 XpData.addXp((IEntityDataSaver) player, xpDropped);
 
-                entity.sendMessage(
-                        Text.literal("XP received: " + xpDropped)
-                );
+//                entity.sendMessage(Text.literal("XP received: " + xpDropped));
             }
         }));
     }
