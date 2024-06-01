@@ -1,4 +1,4 @@
-package de.aeksora.minecraftmmo.util;
+package de.aeksora.minemmo.util;
 
 import net.minecraft.nbt.NbtCompound;
 

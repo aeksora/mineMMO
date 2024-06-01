@@ -1,4 +1,4 @@
-package de.aeksora.minecraftmmo.mixin.client;
+package de.aeksora.minecraftmmo.mixin;
 
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,6 +1,6 @@
-package de.aeksora.minecraftmmo.mixin;
+package de.aeksora.minemmo.mixin;
 
-import de.aeksora.minecraftmmo.util.IEntityDataSaver;
+import de.aeksora.minemmo.util.IEntityDataSaver;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;

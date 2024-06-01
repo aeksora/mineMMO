@@ -1,18 +1,17 @@
-package de.aeksora.minecraftmmo.util;
+package de.aeksora.minemmo.util;
 
+import de.aeksora.minemmo.MineMMO;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Text;
 
 public class MineMMOHud implements HudRenderCallback {
-    public static final Logger LOGGER = LoggerFactory.getLogger("MinecraftMMO");
+    public static final Logger LOGGER = LoggerFactory.getLogger(MineMMO.MOD_ID);
 
     @Override
-    public void onHudRender(DrawContext drawContext, float tickDelta) {
+    public void onHudRender(MatrixStack matrixStack, float tickDelta) {
         MinecraftClient client = MinecraftClient.getInstance();
 
         if (client.player != null && client.world != null) {
@@ -28,7 +27,7 @@ public class MineMMOHud implements HudRenderCallback {
             int x = screenWidth - textWidth - 5;
             int y = screenHeight - textHeight - 5;
 
-            drawContext.drawText(client.textRenderer, hudText, x, y, 0x32a86f, false);
+            client.textRenderer.draw(matrixStack, hudText, x, y, 0x32a86f);
         }
     }
 }

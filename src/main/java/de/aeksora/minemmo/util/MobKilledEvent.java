@@ -1,7 +1,7 @@
-package de.aeksora.minecraftmmo.util;
+package de.aeksora.minemmo.util;
 
-import de.aeksora.minecraftmmo.util.IEntityDataSaver;
-import de.aeksora.minecraftmmo.util.XpData;
+import de.aeksora.minemmo.util.IEntityDataSaver;
+import de.aeksora.minemmo.util.XpData;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;

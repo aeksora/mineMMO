@@ -1,14 +1,15 @@
-package de.aeksora.minecraftmmo;
+package de.aeksora.minemmo;
 
-import de.aeksora.minecraftmmo.util.MobKilledEvent;
-import de.aeksora.minecraftmmo.util.XpCommand;
+import de.aeksora.minemmo.util.MobKilledEvent;
+import de.aeksora.minemmo.util.XpCommand;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MineMMO implements ModInitializer {
-    public static final Logger LOGGER = LoggerFactory.getLogger("MinecraftMMO");
+	public static final String MOD_ID = "MineMMO";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
 	public void onInitialize() {

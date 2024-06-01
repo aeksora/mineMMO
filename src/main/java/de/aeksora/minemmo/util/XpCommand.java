@@ -1,4 +1,4 @@
-package de.aeksora.minecraftmmo.util;
+package de.aeksora.minemmo.util;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
