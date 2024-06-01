@@ -19,7 +19,7 @@
           "de.aeksora.minecraftmmo.MineMMO"
 		],
 		"client": [
-          "de.aeksora.minecraftmmo.ExampleModClient"
+          "de.aeksora.minecraftmmo.MineMMOClient"
 		]
 	},
 	"mixins": [

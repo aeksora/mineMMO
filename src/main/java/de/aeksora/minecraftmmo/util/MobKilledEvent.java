@@ -1,4 +1,4 @@
-package de.aeksora.minecraftmmo;
+package de.aeksora.minecraftmmo.util;
 
 import de.aeksora.minecraftmmo.util.IEntityDataSaver;
 import de.aeksora.minecraftmmo.util.XpData;
@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MobKilledEvent {
-    public static final Logger LOGGER = LoggerFactory.getLogger("MincraftMMO");
+    public static final Logger LOGGER = LoggerFactory.getLogger("MinecraftMMO");
     public static void register() {
         ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(((world, entity, killedEntity) -> {
             if (killedEntity instanceof MobEntity mob && entity instanceof ServerPlayerEntity player) {
@@ -20,10 +20,7 @@ public class MobKilledEvent {
                 int xpDropped = mobXpDrop(mob);
 
                 XpData.addXp((IEntityDataSaver) player, xpDropped);
-                // print current xp
-//                entity.sendMessage(
-//                        Text.literal("XP: " + ((IEntityDataSaver) player).getPersistentData().getInt("xp"))
-//                );
+
                 entity.sendMessage(
                         Text.literal("XP received: " + xpDropped)
                 );

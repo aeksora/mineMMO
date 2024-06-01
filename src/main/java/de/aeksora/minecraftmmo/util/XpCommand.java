@@ -11,22 +11,16 @@ import net.minecraft.text.Text;
 
 public class XpCommand {
     public static void registerCommands() {
-        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
-            dispatcher.register(
-                    CommandManager.literal("getxp")
-                            .executes(XpCommand::getXp)
-            );
-        }));
-
-        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
-            dispatcher.register(CommandManager.literal("addxp")
-                    .then(
-                            CommandManager
-                                    .argument("amount", IntegerArgumentType.integer())
-                                    .executes(XpCommand::addXp)
-                    )
-            );
-        }));
+        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(
+                CommandManager.literal("minemmoxp")
+                        .then(CommandManager.literal("get").executes(XpCommand::getXp))
+                        .then(CommandManager.literal("add")
+                                .then(CommandManager.argument("amount", IntegerArgumentType.integer()).executes(XpCommand::addXp))
+                        )
+                        .then(CommandManager.literal("set")
+                                .then(CommandManager.argument("amount", IntegerArgumentType.integer()).executes(XpCommand::setXp))
+                        )
+        )));
     }
 
     private static int getXp(CommandContext<ServerCommandSource> context) {
@@ -47,6 +41,17 @@ public class XpCommand {
 
         if (source.getEntity() instanceof ServerPlayerEntity player) {
             XpData.addXp((IEntityDataSaver) player, amount);
+        }
+
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int setXp(CommandContext<ServerCommandSource> context) {
+        ServerCommandSource source = context.getSource();
+        int amount = IntegerArgumentType.getInteger(context, "amount");
+
+        if (source.getEntity() instanceof ServerPlayerEntity player) {
+            XpData.setXp((IEntityDataSaver) player, amount);
         }
 
         return Command.SINGLE_SUCCESS;

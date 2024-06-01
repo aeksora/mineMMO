@@ -13,6 +13,13 @@ public class XpData {
         return xp;
     }
 
+    public static int setXp(IEntityDataSaver player, int amount) {
+        NbtCompound nbt = player.getPersistentData();
+        nbt.putInt("xp", amount);
+
+        return amount;
+    }
+
     public static int removeXp(IEntityDataSaver player, int amount) {
         NbtCompound nbt = player.getPersistentData();
         int xp = nbt.getInt("xp");
