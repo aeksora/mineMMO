@@ -1,11 +1,13 @@
 package de.aeksora.minemmo.util;
 
 import de.aeksora.minemmo.MineMMO;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,14 +43,35 @@ public class MobSpawnEvent {
 
         EntityAttributeInstance healthAttribute = mob.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
         if (healthAttribute != null) {
-            healthAttribute.setBaseValue(healthAttribute.getBaseValue() * finalMultiplier);
+            healthAttribute.setBaseValue((int)(healthAttribute.getBaseValue() * finalMultiplier));
         }
 
         EntityAttributeInstance damageAttribute = mob.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
         if (damageAttribute != null) {
-            damageAttribute.setBaseValue(damageAttribute.getBaseValue() * finalMultiplier);
+            damageAttribute.setBaseValue((int)(damageAttribute.getBaseValue() * finalMultiplier));
         }
 
         mob.setHealth(mob.getMaxHealth());
+
+        setName(mob, isElite);
+
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
+            if (entity instanceof HostileEntity) {
+                System.out.println("Damage event called on: " + entity.getName());
+                setName(mob, isElite);
+            }
+            return true;
+        });
+    }
+
+    private static void setName(HostileEntity mob, boolean isElite) {
+        String name = String.format("Health: %d, Damage: %d", (int) mob.getHealth(), (int) mob.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE));
+
+        if (isElite) {
+            name = "ELITE " + name;
+        }
+
+        mob.setCustomName(Text.of(name));
+        mob.setCustomNameVisible(true);
     }
 }

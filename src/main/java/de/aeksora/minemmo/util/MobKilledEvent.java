@@ -36,7 +36,7 @@ public class MobKilledEvent {
         final int xp = (int) (maxHealth * attackDamage);
 
         LOGGER.info(
-                "\nMob Stats:\nmobName: " + killedMob.getDisplayName() + "\nmaxHealth: " + maxHealth + "\nattackDamage: " + attackDamage + "\nxp: " + xp
+                "\nMob Stats:\nmobName: " + killedMob.getName() + "\nmaxHealth: " + maxHealth + "\nattackDamage: " + attackDamage + "\nxp: " + xp
         );
 
         return xp;
