@@ -1,10 +1,7 @@
 package de.aeksora.minemmo;
 
 import de.aeksora.minemmo.networking.ModMessages;
-import de.aeksora.minemmo.util.MobKilledEvent;
-import de.aeksora.minemmo.util.PlayerConnectEvent;
-import de.aeksora.minemmo.util.PlayerDeathEvent;
-import de.aeksora.minemmo.util.XpCommand;
+import de.aeksora.minemmo.util.*;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -25,6 +22,7 @@ public class MineMMO implements ModInitializer {
 		// Proceed with mild caution.
 
 		LOGGER.info("Mod initialized");
+		MobSpawnEvent.register();
 		MobKilledEvent.register();
 		PlayerDeathEvent.register();
 		XpCommand.registerCommands();
