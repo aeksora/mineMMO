@@ -11,9 +11,10 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import org.apache.logging.log4j.core.jmx.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Objects;
 
 public class XpCommand {
     public static final Logger LOGGER = LoggerFactory.getLogger(MineMMO.MOD_ID);
@@ -50,9 +51,9 @@ public class XpCommand {
 
         if (source.getEntity() instanceof ServerPlayerEntity player) {
             player.sendMessage(Text.literal(
-                    "Strength: " + player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).getValue()
-                            + "\nHealth: " + player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).getValue()
-                            + "\nSpeed: " + player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).getValue()
+                    "Strength: " + Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).getValue()
+                            + "\nHealth: " + Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).getValue()
+                            + "\nSpeed: " + Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue()
                     )
             );
         }
@@ -101,12 +102,12 @@ public class XpCommand {
         if (source.getEntity() instanceof ServerPlayerEntity player) {
             EntityAttributeInstance strengthAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
 
-            double strength = strengthAttribute.getValue();
+            double strength = strengthAttribute != null ? strengthAttribute.getValue() : 0;
             LOGGER.info("Player strength start: " + strength);
 
             for (int i = 0; i < amount; i++) {
                 if (XpData.removeXp((IEntityDataSaver) player, 1000)) {
-                    strengthAttribute.setBaseValue(strength + 1);
+                    Objects.requireNonNull(strengthAttribute).setBaseValue(strength + 1);
                     strength = strengthAttribute.getValue();
                     LOGGER.info("Player strength: " + strength);
                 }
@@ -123,7 +124,7 @@ public class XpCommand {
         ServerCommandSource source = context.getSource();
 
         if (source.getEntity() instanceof ServerPlayerEntity player) {
-            player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(1);
+            Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(1);
         }
 
         return Command.SINGLE_SUCCESS;
@@ -136,16 +137,18 @@ public class XpCommand {
         if (source.getEntity() instanceof ServerPlayerEntity player) {
             EntityAttributeInstance healthAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
 
-            double health = healthAttribute.getValue();
+            double health = healthAttribute != null ? healthAttribute.getValue() : 0;
             LOGGER.info("Player health start: " + health);
 
             for (int i = 0; i < amount; i++) {
                 if (XpData.removeXp((IEntityDataSaver) player, 1000)) {
-                    healthAttribute.setBaseValue(health + 1);
+                    Objects.requireNonNull(healthAttribute).setBaseValue(health + 1);
                     health = healthAttribute.getValue();
                     LOGGER.info("Player health: " + health);
                 }
             }
+
+            player.setHealth(player.getMaxHealth());
 
             LOGGER.info("Player health end: " + health);
 
@@ -158,7 +161,7 @@ public class XpCommand {
         ServerCommandSource source = context.getSource();
 
         if (source.getEntity() instanceof ServerPlayerEntity player) {
-            player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(1);
+            Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(1);
         }
 
         return Command.SINGLE_SUCCESS;
@@ -171,12 +174,13 @@ public class XpCommand {
         if (source.getEntity() instanceof ServerPlayerEntity player) {
             EntityAttributeInstance speedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
 
-            double speed = speedAttribute.getValue();
+            double speed = speedAttribute != null ? speedAttribute.getValue() : 0;
             LOGGER.info("Player speed start: " + speed);
+
 
             for (int i = 0; i < amount; i++) {
                 if (XpData.removeXp((IEntityDataSaver) player, 1000)) {
-                    speedAttribute.setBaseValue(speed + 0.001);
+                    Objects.requireNonNull(speedAttribute).setBaseValue(speed + 0.001);
                     speed = speedAttribute.getValue();
                     LOGGER.info("Player speed: " + speed);
                 }
@@ -193,7 +197,7 @@ public class XpCommand {
         ServerCommandSource source = context.getSource();
 
         if (source.getEntity() instanceof ServerPlayerEntity player) {
-            player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+            Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.1);
         }
 
         return Command.SINGLE_SUCCESS;

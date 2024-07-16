@@ -15,13 +15,14 @@ import org.slf4j.LoggerFactory;
 import java.util.Random;
 
 public class MobSpawnEvent {
+    @SuppressWarnings("unused")
     public static final Logger LOGGER = LoggerFactory.getLogger(MineMMO.MOD_ID);
     private static final Random RANDOM = new Random();
 
     public static void register() {
         ServerEntityEvents.ENTITY_LOAD.register(((entity, world) -> {
             if (world instanceof ServerWorld && entity instanceof HostileEntity) {
-                modifyAttributes((HostileEntity) entity, (ServerWorld) world);
+                modifyAttributes((HostileEntity) entity, world);
             }
         }));
     }
@@ -31,7 +32,7 @@ public class MobSpawnEvent {
         BlockPos mobPos = mob.getBlockPos();
         double distance = mobPos.getManhattanDistance(spawnPoint);
 
-        double baseMultiplier = Math.pow(2, distance/400.0);
+        double baseMultiplier = Math.pow(2, distance/500.0);
         double noiseFactor = 0.8 + (RANDOM.nextDouble() * 1.2);
 
         boolean isElite = RANDOM.nextDouble() < 0.05;
