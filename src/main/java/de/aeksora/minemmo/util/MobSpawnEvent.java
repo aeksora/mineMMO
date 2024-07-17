@@ -3,6 +3,7 @@ package de.aeksora.minemmo.util;
 import de.aeksora.minemmo.MineMMO;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.HostileEntity;
@@ -12,7 +13,9 @@ import net.minecraft.util.math.BlockPos;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class MobSpawnEvent {
     @SuppressWarnings("unused")
@@ -56,12 +59,24 @@ public class MobSpawnEvent {
 
         setName(mob, isElite);
 
+        Set<HostileEntity> entitiesToUpdate = new HashSet<>();
+
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if (entity instanceof HostileEntity) {
-                System.out.println("Damage event called on: " + entity.getName());
-                setName(mob, isElite);
+//                System.out.println("Damage event called on: " + entity.getName());
+                entitiesToUpdate.add((HostileEntity) entity);
             }
             return true;
+        });
+
+        // Register the event listener for the server tick
+        ServerTickEvents.END_SERVER_TICK.register(server -> {
+            for (HostileEntity entity : entitiesToUpdate) {
+                if (entity.isAlive()) {
+                    setName(entity, isElite); // Update this to use the correct parameters
+                }
+            }
+            entitiesToUpdate.clear();
         });
     }
 
