@@ -63,7 +63,6 @@ public class MobSpawnEvent {
 
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             if (entity instanceof HostileEntity) {
-//                System.out.println("Damage event called on: " + entity.getName());
                 entitiesToUpdate.add((HostileEntity) entity);
             }
             return true;
@@ -73,7 +72,7 @@ public class MobSpawnEvent {
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             for (HostileEntity entity : entitiesToUpdate) {
                 if (entity.isAlive()) {
-                    setName(entity, isElite); // Update this to use the correct parameters
+                    setName(entity, isElite);
                 }
             }
             entitiesToUpdate.clear();

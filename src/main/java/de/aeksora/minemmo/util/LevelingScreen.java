@@ -101,6 +101,7 @@ public class LevelingScreen extends Screen {
         int level;
         double stat;
 
+
         switch (statId) {
             case "strength" -> {
                 double strength = Objects.requireNonNull(Objects.requireNonNull(player).getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).getBaseValue();
