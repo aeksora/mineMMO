@@ -3,14 +3,14 @@
   "id": "minemmo",
   "version": "${version}",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "MineMMO",
+  "description": "",
   "authors": [
     "aeksora"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://aeksora.nl",
+    "sources": "https://github.com/aeksora/mineMMO"
   },
 
   "license": "CC0-1.0",

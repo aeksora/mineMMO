@@ -35,7 +35,7 @@ public class MobSpawnEvent {
         BlockPos mobPos = mob.getBlockPos();
         double distance = mobPos.getManhattanDistance(spawnPoint);
 
-        double baseMultiplier = Math.pow(2, distance/500.0);
+        double baseMultiplier = 0.1 * Math.pow(distance, 0.5) + 1;
         double noiseFactor = 0.8 + (RANDOM.nextDouble() * 1.2);
 
         boolean isElite = RANDOM.nextDouble() < 0.05;

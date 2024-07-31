@@ -1,6 +1,6 @@
 package de.aeksora.minemmo;
 
-import de.aeksora.minemmo.networking.ModMessages;
+import de.aeksora.minemmo.networking.ModMessagesC2S;
 import de.aeksora.minemmo.util.*;
 import net.fabricmc.api.ModInitializer;
 
@@ -22,7 +22,7 @@ public class MineMMO implements ModInitializer {
 		MobKilledEvent.register();
 		PlayerDeathEvent.register();
 		XpCommand.registerCommands();
-		ModMessages.registerS2CPackages();
+		ModMessagesC2S.registerC2SPackages();
 		PlayerConnectEvent.register();
 	}
 

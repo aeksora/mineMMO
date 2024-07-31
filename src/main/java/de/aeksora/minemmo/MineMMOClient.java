@@ -1,6 +1,6 @@
 package de.aeksora.minemmo;
 
-import de.aeksora.minemmo.networking.ModMessages;
+import de.aeksora.minemmo.networking.ModMessagesS2C;
 import de.aeksora.minemmo.util.LevelingScreen;
 import de.aeksora.minemmo.util.MineMMOHud;
 import net.fabricmc.api.ClientModInitializer;
@@ -23,7 +23,7 @@ public class MineMMOClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		HudRenderCallback.EVENT.register(new MineMMOHud());
 		initKeybinds();
-		ModMessages.registerC2SPackages();
+		ModMessagesS2C.registerS2CPackages();
 	}
 
 	public void initKeybinds() {

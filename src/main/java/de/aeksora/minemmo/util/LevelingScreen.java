@@ -88,6 +88,15 @@ public class LevelingScreen extends Screen {
         // Render buttons and labels
         super.render(matrices, mouseX, mouseY, delta);
 
+        // Render level
+        assert this.client != null;
+        IEntityDataSaver player = (IEntityDataSaver) this.client.player;
+        assert player != null;
+        int level = player.getPersistentData().getInt("level");
+        int y = ((this.height/2-25)/2) - 15/2;
+        drawCenteredTextWithShadow(matrices, textRenderer, Text.literal("Level: " + level), this.width / 2, y, 0xFFFFFF);
+        drawCenteredTextWithShadow(matrices, textRenderer, Text.literal("Next Level: " + LevelData.getXpNeeded(level) + "XP"), this.width / 2, y + 10, 0xFFFFFF);
+
         // Render text labels next to the buttons
         drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + getLabelText("strength")), this.width / 2 - 20, this.height / 2 - 25, 0xFFFFFF);
         drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + getLabelText("health")), this.width / 2 - 20, this.height / 2 + 5, 0xFFFFFF);

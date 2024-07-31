@@ -15,5 +15,7 @@ public class PlayerDeathEvent {
         Objects.requireNonNull(newPlayer.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(Objects.requireNonNull(oldPlayer.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).getBaseValue());
         Objects.requireNonNull(newPlayer.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(Objects.requireNonNull(oldPlayer.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).getBaseValue());
         Objects.requireNonNull(newPlayer.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(Objects.requireNonNull(oldPlayer.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getBaseValue());
+
+        StatModifier.syncAtributes(newPlayer);
     }
 }

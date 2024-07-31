@@ -6,35 +6,152 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.network.PacketByteBuf;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
+import static de.aeksora.minemmo.MineMMO.MOD_ID;
+
 public class SyncDataS2CPacket {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
     @SuppressWarnings("unused")
     public static void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-        assert client.player != null;
-        ((IEntityDataSaver) client.player).getPersistentData().putInt("xp", buf.readInt());
-        buf.clear();
+        // Retain the buffer to prevent it from being prematurely released
+        buf.retain();
+
+        client.execute(() -> {
+            try {
+                if (client.player != null) {
+                    // Check if there are enough readable bytes before attempting to read
+                    if (buf.readableBytes() >= 4) {
+                        int xp = buf.readInt();
+                        ((IEntityDataSaver) client.player).getPersistentData().putInt("xp", xp);
+                    } else {
+                        LOGGER.error("Not enough readable bytes in PacketByteBuf");
+                    }
+                } else {
+                    LOGGER.error("Client player is null when receiving packet");
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error processing PacketByteBuf", e);
+            } finally {
+                // Ensure the buffer is released to prevent memory leaks
+                buf.release();
+            }
+        });
+    }
+
+    @SuppressWarnings("unused")
+    public static void receiveLevel(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+        // Retain the buffer to prevent it from being prematurely released
+        buf.retain();
+
+        client.execute(() -> {
+            try {
+                if (client.player != null) {
+                    // Check if there are enough readable bytes before attempting to read
+                    if (buf.readableBytes() >= 4) {
+                        int level = buf.readInt();
+                        ((IEntityDataSaver) client.player).getPersistentData().putInt("level", level);
+                    } else {
+                        LOGGER.error("Not enough readable bytes in PacketByteBuf");
+                    }
+                } else {
+                    LOGGER.error("Client player is null when receiving packet");
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error processing PacketByteBuf", e);
+            } finally {
+                // Ensure the buffer is released to prevent memory leaks
+                buf.release();
+            }
+        });
     }
 
     @SuppressWarnings("unused")
     public static void setGAD(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-        double strength = buf.readDouble();
-        assert client.player != null;
-        Objects.requireNonNull(client.player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(strength);
+        // Retain the buffer to prevent it from being prematurely released
+        buf.retain();
+
+        client.execute(() -> {
+            try {
+                if (client.player != null) {
+                    // Check if there are enough readable bytes before attempting to read
+                    if (buf.readableBytes() >= 4) {
+                        double strength = buf.readDouble();
+                        assert client.player != null;
+                        Objects.requireNonNull(client.player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(strength);
+                    } else {
+                        LOGGER.error("Not enough readable bytes in PacketByteBuf");
+                    }
+                } else {
+                    LOGGER.error("Client player is null when receiving packet");
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error processing PacketByteBuf", e);
+            } finally {
+                // Ensure the buffer is released to prevent memory leaks
+                buf.release();
+            }
+        });
     }
 
     @SuppressWarnings("unused")
     public static void setGMH(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-        double health = buf.readDouble();
-        assert client.player != null;
-        Objects.requireNonNull(client.player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(health);
+        // Retain the buffer to prevent it from being prematurely released
+        buf.retain();
+
+        client.execute(() -> {
+            try {
+                if (client.player != null) {
+                    // Check if there are enough readable bytes before attempting to read
+                    if (buf.readableBytes() >= 4) {
+                        double health = buf.readDouble();
+                        assert client.player != null;
+                        Objects.requireNonNull(client.player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(health);
+                    } else {
+                        LOGGER.error("Not enough readable bytes in PacketByteBuf");
+                    }
+                } else {
+                    LOGGER.error("Client player is null when receiving packet");
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error processing PacketByteBuf", e);
+            } finally {
+                // Ensure the buffer is released to prevent memory leaks
+                buf.release();
+            }
+        });
     }
 
     @SuppressWarnings("unused")
     public static void setGMS(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-        double speed = buf.readDouble();
-        assert client.player != null;
-        Objects.requireNonNull(client.player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(speed);
+        // Retain the buffer to prevent it from being prematurely released
+        buf.retain();
+
+        client.execute(() -> {
+            try {
+                if (client.player != null) {
+                    // Check if there are enough readable bytes before attempting to read
+                    if (buf.readableBytes() >= 4) {
+                        double speed = buf.readDouble();
+                        assert client.player != null;
+                        Objects.requireNonNull(client.player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(speed);
+                    } else {
+                        LOGGER.error("Not enough readable bytes in PacketByteBuf");
+                    }
+                } else {
+                    LOGGER.error("Client player is null when receiving packet");
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error processing PacketByteBuf", e);
+            } finally {
+                // Ensure the buffer is released to prevent memory leaks
+                buf.release();
+            }
+        });
     }
 }
