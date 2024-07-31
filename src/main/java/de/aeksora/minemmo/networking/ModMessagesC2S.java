@@ -10,6 +10,7 @@ public class ModMessagesC2S {
         ServerPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.GAD_PACKET_2S_ID, SyncDataC2SPacket::addGAD2S);
         ServerPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.GMH_PACKET_2S_ID, SyncDataC2SPacket::addGMH2S);
         ServerPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.GMS_PACKET_2S_ID, SyncDataC2SPacket::addGMS2S);
+        ServerPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.REGEN_PACKET_2S_ID, SyncDataC2SPacket::addRegen2S);
     }
 
 }

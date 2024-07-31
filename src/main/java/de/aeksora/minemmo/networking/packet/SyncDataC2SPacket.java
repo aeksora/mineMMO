@@ -22,4 +22,9 @@ public class SyncDataC2SPacket {
     public static void addGMS2S(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
         StatModifier.addSpeed(player, 1);
     }
+
+    @SuppressWarnings("unused")
+    public static void addRegen2S(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+        StatModifier.addRegen(player, 1);
+    }
 }

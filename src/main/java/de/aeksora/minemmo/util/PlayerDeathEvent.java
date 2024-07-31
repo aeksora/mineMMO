@@ -21,8 +21,8 @@ public class PlayerDeathEvent {
     private static void afterRespawn(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean alive) {
         if (!alive) {
             int level = ((IEntityDataSaver) oldPlayer).getPersistentData().getInt("level");
+            ((IEntityDataSaver) newPlayer).getPersistentData().putFloat("regen", ((IEntityDataSaver) oldPlayer).getPersistentData().getFloat("regen"));
             LevelData.setLevel(newPlayer, level);
-
             StatModifier.syncAtributes(newPlayer);
         }
     }

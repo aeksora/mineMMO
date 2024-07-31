@@ -1,5 +1,6 @@
 package de.aeksora.minemmo.util;
 
+import de.aeksora.minemmo.MineMMO;
 import de.aeksora.minemmo.networking.MineMMONetworkingConstants;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -17,7 +18,7 @@ public class StatModifier {
         for (int i = 0; i < amountToBeAdded; i++) {
             if (XpData.removeXp((IEntityDataSaver) player, LevelData.getXpNeeded(LevelData.getLevel(player)))) {
                 assert strengthAttribute != null;
-                strengthAttribute.setBaseValue(strengthAttribute.getBaseValue() + 1);
+                strengthAttribute.setBaseValue(strengthAttribute.getBaseValue() + MineMMO.STRENGTH_PER_LEVEL);
                 LevelData.addLevel(player, 1);
             }
         }
@@ -34,7 +35,7 @@ public class StatModifier {
         for (int i = 0; i < amountToBeAdded; i++) {
             if (XpData.removeXp((IEntityDataSaver) player, LevelData.getXpNeeded(LevelData.getLevel(player)))) {
                 assert healthAttribute != null;
-                healthAttribute.setBaseValue(healthAttribute.getBaseValue() + 1);
+                healthAttribute.setBaseValue(healthAttribute.getBaseValue() + MineMMO.HEALTH_PER_LEVEL);
                 LevelData.addLevel(player, 1);
             }
         }
@@ -51,7 +52,7 @@ public class StatModifier {
         for (int i = 0; i < amountToBeAdded; i++) {
             if (XpData.removeXp((IEntityDataSaver) player, LevelData.getXpNeeded(LevelData.getLevel(player)))) {
                 assert speedAttribute != null;
-                speedAttribute.setBaseValue(speedAttribute.getBaseValue() + 0.001);
+                speedAttribute.setBaseValue(speedAttribute.getBaseValue() + MineMMO.SPEED_PER_LEVEL);
                 LevelData.addLevel(player, 1);
             }
         }
@@ -60,6 +61,22 @@ public class StatModifier {
         assert speedAttribute != null;
         buffer.writeDouble(speedAttribute.getBaseValue());
         ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMS_PACKET_2C_ID, buffer);
+    }
+
+    public static void addRegen(ServerPlayerEntity player, int amountToBeAdded) {
+        float regen = ((IEntityDataSaver) player).getPersistentData().getFloat("regen");
+
+        for (int i = 0; i < amountToBeAdded; i++) {
+            if (XpData.removeXp((IEntityDataSaver) player, LevelData.getXpNeeded(LevelData.getLevel(player)))) {
+                regen += MineMMO.REGEN_PER_LEVEL;
+                ((IEntityDataSaver) player).getPersistentData().putFloat("regen", regen);
+                LevelData.addLevel(player, 1);
+            }
+        }
+
+        PacketByteBuf buffer = PacketByteBufs.create();
+        buffer.writeFloat(regen);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.REGEN_PACKET_ID, buffer);
     }
 
     public static void syncAtributes(ServerPlayerEntity player) {
@@ -74,5 +91,9 @@ public class StatModifier {
         PacketByteBuf buffer3 = PacketByteBufs.create();
         buffer3.writeDouble(Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue());
         ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMS_PACKET_2C_ID, buffer3);
+
+        PacketByteBuf buffer4 = PacketByteBufs.create();
+        buffer4.writeFloat(((IEntityDataSaver) player).getPersistentData().getFloat("regen"));
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.REGEN_PACKET_ID, buffer4);
     }
 }

@@ -11,6 +11,11 @@ public class MineMMO implements ModInitializer {
 	public static final String MOD_ID = "MineMMO";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+	public static final int HEALTH_PER_LEVEL = 1;
+	public static final int STRENGTH_PER_LEVEL = 1;
+	public static final double SPEED_PER_LEVEL = 0.001;
+	public static final float REGEN_PER_LEVEL = 0.025f;
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
@@ -24,6 +29,7 @@ public class MineMMO implements ModInitializer {
 		XpCommand.registerCommands();
 		ModMessagesC2S.registerC2SPackages();
 		PlayerConnectEvent.register();
+		CustomHealthRegen.register();
 	}
 
 }

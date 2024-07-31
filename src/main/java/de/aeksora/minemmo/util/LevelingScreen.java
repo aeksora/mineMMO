@@ -23,6 +23,7 @@ public class LevelingScreen extends Screen {
     public ButtonWidget button1;
     public ButtonWidget button2;
     public ButtonWidget button3;
+    public ButtonWidget button4;
 
     @Override
     public void init() {
@@ -71,10 +72,20 @@ public class LevelingScreen extends Screen {
                 .tooltip(Tooltip.of(Text.literal("Click to put a level into speed")))
                 .build();
 
+        // Button 4
+        button4 = ButtonWidget.builder(Text.literal("Regeneration"), button -> {
+                    PacketByteBuf buffer = PacketByteBufs.create();
+                    ClientPlayNetworking.send(MineMMONetworkingConstants.REGEN_PACKET_2S_ID, buffer);
+                })
+                .dimensions(centerX - 105, centerY + 2*buttonYSpacing, buttonWidth, buttonHeight)
+                .tooltip(Tooltip.of(Text.literal("Click to put a level into regeneration")))
+                .build();
+
         // Add buttons to screen
         this.addDrawableChild(button1);
         this.addDrawableChild(button2);
         this.addDrawableChild(button3);
+        this.addDrawableChild(button4);
     }
 
     @Override
@@ -100,6 +111,7 @@ public class LevelingScreen extends Screen {
         drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + getLabelText("strength")), this.width / 2 - 20, this.height / 2 - 25, 0xFFFFFF);
         drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + getLabelText("health")), this.width / 2 - 20, this.height / 2 + 5, 0xFFFFFF);
         drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + getLabelText("speed")), this.width / 2 - 20, this.height / 2 + 35, 0xFFFFFF);
+        drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + getLabelText("regen")), this.width / 2 - 20, this.height / 2 + 65, 0xFFFFFF);
     }
 
     public String getLabelText(String statId) {
@@ -125,6 +137,11 @@ public class LevelingScreen extends Screen {
                 double speed = Objects.requireNonNull(Objects.requireNonNull(player).getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue();
                 level = (int) Math.round((speed - 0.1) / 0.001);
                 stat = Math.round(speed * 1000.0) / 1000.0;
+            }
+            case "regen" -> {
+                float regen = ((IEntityDataSaver) Objects.requireNonNull(player)).getPersistentData().getFloat("regen") + 0.25f;
+                level = (int) Math.round((regen - 0.25) / 0.025);
+                stat = Math.round(regen * 100.0) / 100.0;
             }
             default -> {
                 level = 0;

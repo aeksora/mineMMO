@@ -72,6 +72,33 @@ public class SyncDataS2CPacket {
     }
 
     @SuppressWarnings("unused")
+    public static void receiveRegen(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+        // Retain the buffer to prevent it from being prematurely released
+        buf.retain();
+
+        client.execute(() -> {
+            try {
+                if (client.player != null) {
+                    // Check if there are enough readable bytes before attempting to read
+                    if (buf.readableBytes() >= 4) {
+                        float regen = buf.readFloat();
+                        ((IEntityDataSaver) client.player).getPersistentData().putFloat("regen", regen);
+                    } else {
+                        LOGGER.error("Not enough readable bytes in PacketByteBuf");
+                    }
+                } else {
+                    LOGGER.error("Client player is null when receiving packet");
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error processing PacketByteBuf", e);
+            } finally {
+                // Ensure the buffer is released to prevent memory leaks
+                buf.release();
+            }
+        });
+    }
+
+    @SuppressWarnings("unused")
     public static void setGAD(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
         // Retain the buffer to prevent it from being prematurely released
         buf.retain();
