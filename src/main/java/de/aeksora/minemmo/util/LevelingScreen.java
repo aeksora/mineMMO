@@ -1,5 +1,6 @@
 package de.aeksora.minemmo.util;
 
+import de.aeksora.minemmo.MineMMO;
 import de.aeksora.minemmo.networking.MineMMONetworkingConstants;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -135,13 +136,13 @@ public class LevelingScreen extends Screen {
             }
             case "speed" -> {
                 double speed = Objects.requireNonNull(Objects.requireNonNull(player).getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue();
-                level = (int) Math.round((speed - 0.1) / 0.001);
+                level = (int) Math.round((speed - 0.1) / MineMMO.SPEED_PER_LEVEL);
                 stat = Math.round(speed * 1000.0) / 1000.0;
             }
             case "regen" -> {
                 float regen = ((IEntityDataSaver) Objects.requireNonNull(player)).getPersistentData().getFloat("regen") + 0.25f;
-                level = (int) Math.round((regen - 0.25) / 0.025);
-                stat = Math.round(regen * 100.0) / 100.0;
+                level = (int) Math.round((regen - 0.25) / MineMMO.REGEN_PER_LEVEL);
+                stat = Math.round(regen * 10000.0) / 10000.0;
             }
             default -> {
                 level = 0;
