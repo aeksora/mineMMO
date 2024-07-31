@@ -29,9 +29,14 @@ public class LevelData {
         int level = nbt.getInt("level");
         level += amount;
 
-
-
         nbt.putInt("level", level);
         syncLevel(level, player);
+    }
+
+    public static void setLevel(ServerPlayerEntity player, int amount) {
+        NbtCompound nbt = ((IEntityDataSaver) player).getPersistentData();
+
+        nbt.putInt("level", amount);
+        syncLevel(amount, player);
     }
 }

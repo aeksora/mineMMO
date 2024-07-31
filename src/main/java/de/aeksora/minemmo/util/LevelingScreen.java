@@ -90,9 +90,8 @@ public class LevelingScreen extends Screen {
 
         // Render level
         assert this.client != null;
-        IEntityDataSaver player = (IEntityDataSaver) this.client.player;
-        assert player != null;
-        int level = player.getPersistentData().getInt("level");
+        ClientPlayerEntity player = this.client.player;
+        int level = ((IEntityDataSaver) player).getPersistentData().getInt("level");
         int y = ((this.height/2-25)/2) - 15/2;
         drawCenteredTextWithShadow(matrices, textRenderer, Text.literal("Level: " + level), this.width / 2, y, 0xFFFFFF);
         drawCenteredTextWithShadow(matrices, textRenderer, Text.literal("Next Level: " + LevelData.getXpNeeded(level) + "XP"), this.width / 2, y + 10, 0xFFFFFF);
