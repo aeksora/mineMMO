@@ -13,8 +13,6 @@ public class XpData {
         int xp = nbt.getInt("xp");
         xp += amount;
 
-
-
         nbt.putInt("xp", xp);
         syncXp(xp, (ServerPlayerEntity) player);
         return xp;

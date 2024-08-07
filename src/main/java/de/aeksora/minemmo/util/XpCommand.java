@@ -27,17 +27,20 @@ public class XpCommand {
                         )
                         .then(CommandManager.literal("stats").executes(XpCommand::getStats)
                                 .then(CommandManager.literal("strength")
-                                        .then(CommandManager.argument("amount", IntegerArgumentType.integer()).executes(XpCommand::addStrength))
+                                        .then(CommandManager.literal("set").then(CommandManager.argument("amount", IntegerArgumentType.integer()).executes(XpCommand::setStrength)))
                                 )
                                 .then(CommandManager.literal("strengthreset").executes(XpCommand::resetStrength))
                                 .then(CommandManager.literal("health")
-                                        .then(CommandManager.argument("amount", IntegerArgumentType.integer()).executes(XpCommand::addHealth))
+                                        .then(CommandManager.literal("set").then(CommandManager.argument("amount", IntegerArgumentType.integer()).executes(XpCommand::setHealth)))
                                 )
                                 .then(CommandManager.literal("healthreset").executes(XpCommand::resetHealth))
                                 .then(CommandManager.literal("speed")
-                                        .then(CommandManager.argument("amount", IntegerArgumentType.integer()).executes(XpCommand::addSpeed))
+                                        .then(CommandManager.literal("set").then(CommandManager.argument("amount", IntegerArgumentType.integer()).executes(XpCommand::setSpeed)))
                                 )
                                 .then(CommandManager.literal("speedreset").executes(XpCommand::resetSpeed))
+                                .then(CommandManager.literal("regen")
+                                        .then(CommandManager.literal("set").then(CommandManager.argument("amount", IntegerArgumentType.integer()).executes(XpCommand::setRegen)))
+                                )
                         )
                         .then(CommandManager.literal("reset").executes(XpCommand::reset))
         )));
@@ -92,12 +95,12 @@ public class XpCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int addStrength(CommandContext<ServerCommandSource> context) {
+    private static int setStrength(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
         int amount = IntegerArgumentType.getInteger(context, "amount");
 
         if (source.getEntity() instanceof ServerPlayerEntity player) {
-            StatModifier.addStrength(player, amount);
+            StatModifier.setStrength(player, amount);
         }
 
         return Command.SINGLE_SUCCESS;
@@ -120,12 +123,12 @@ public class XpCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int addHealth(CommandContext<ServerCommandSource> context) {
+    private static int setHealth(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
         int amount = IntegerArgumentType.getInteger(context, "amount");
 
         if (source.getEntity() instanceof ServerPlayerEntity player) {
-            StatModifier.addHealth(player, amount);
+            StatModifier.setHealth(player, amount);
         }
 
         return Command.SINGLE_SUCCESS;
@@ -148,12 +151,12 @@ public class XpCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int addSpeed(CommandContext<ServerCommandSource> context) {
+    private static int setSpeed(CommandContext<ServerCommandSource> context) {
         ServerCommandSource source = context.getSource();
         int amount = IntegerArgumentType.getInteger(context, "amount");
 
         if (source.getEntity() instanceof ServerPlayerEntity player) {
-            StatModifier.addSpeed(player, amount);
+            StatModifier.setSpeed(player, amount);
         }
 
         return Command.SINGLE_SUCCESS;
@@ -170,6 +173,17 @@ public class XpCommand {
             LevelData.setLevel(player, LevelData.getLevel(player) - statLevel);
 
             StatModifier.syncAtributes(player);
+        }
+
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int setRegen(CommandContext<ServerCommandSource> context) {
+        ServerCommandSource source = context.getSource();
+        int amount = IntegerArgumentType.getInteger(context, "amount");
+
+        if (source.getEntity() instanceof ServerPlayerEntity player) {
+            StatModifier.setRegen(player, amount);
         }
 
         return Command.SINGLE_SUCCESS;
