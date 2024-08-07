@@ -13,8 +13,8 @@ public class MineMMO implements ModInitializer {
 
 	public static final int HEALTH_PER_LEVEL = 1;
 	public static final int STRENGTH_PER_LEVEL = 1;
-	public static final double SPEED_PER_LEVEL = 0.001;
-	public static final float REGEN_PER_LEVEL = 0.0125f;
+	public static final double SPEED_PER_LEVEL = 0.0015;
+	public static final float REGEN_PER_LEVEL = 0.02f;
 
 	@Override
 	public void onInitialize() {
