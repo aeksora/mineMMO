@@ -29,6 +29,20 @@ public class StatModifier {
         ServerPlayNetworking.send(player, MineMMONetworkingConstants.GAD_PACKET_2C_ID, buffer);
     }
 
+    public static void setStrength(ServerPlayerEntity player, int amount) {
+        EntityAttributeInstance strengthAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+
+        double trueAmount = amount * MineMMO.STRENGTH_PER_LEVEL + 1.0;
+
+        assert strengthAttribute != null;
+        strengthAttribute.setBaseValue(trueAmount);
+        LevelData.addLevel(player, amount);
+
+        PacketByteBuf buffer = PacketByteBufs.create();
+        buffer.writeDouble(strengthAttribute.getBaseValue());
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GAD_PACKET_2C_ID, buffer);
+    }
+
     public static void addHealth(ServerPlayerEntity player, int amountToBeAdded) {
         EntityAttributeInstance healthAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
 
@@ -42,6 +56,20 @@ public class StatModifier {
 
         PacketByteBuf buffer = PacketByteBufs.create();
         assert healthAttribute != null;
+        buffer.writeDouble(healthAttribute.getBaseValue());
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMH_PACKET_2C_ID, buffer);
+    }
+
+    public static void setHealth(ServerPlayerEntity player, int amount) {
+        EntityAttributeInstance healthAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH);
+
+        double trueAmount = amount * MineMMO.HEALTH_PER_LEVEL + 20.0;
+
+        assert healthAttribute != null;
+        healthAttribute.setBaseValue(trueAmount);
+        LevelData.addLevel(player, amount);
+
+        PacketByteBuf buffer = PacketByteBufs.create();
         buffer.writeDouble(healthAttribute.getBaseValue());
         ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMH_PACKET_2C_ID, buffer);
     }
@@ -63,6 +91,20 @@ public class StatModifier {
         ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMS_PACKET_2C_ID, buffer);
     }
 
+    public static void setSpeed(ServerPlayerEntity player, int amount) {
+        EntityAttributeInstance speedAttribute = player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+
+        double trueAmount = amount * MineMMO.SPEED_PER_LEVEL + 0.1f;
+
+        assert speedAttribute != null;
+        speedAttribute.setBaseValue(trueAmount);
+        LevelData.addLevel(player, amount);
+
+        PacketByteBuf buffer = PacketByteBufs.create();
+        buffer.writeDouble(speedAttribute.getBaseValue());
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMS_PACKET_2C_ID, buffer);
+    }
+
     public static void addRegen(ServerPlayerEntity player, int amountToBeAdded) {
         float regen = ((IEntityDataSaver) player).getPersistentData().getFloat("regen");
 
@@ -70,9 +112,21 @@ public class StatModifier {
             if (XpData.removeXp((IEntityDataSaver) player, LevelData.getXpNeeded(LevelData.getLevel(player)))) {
                 regen += MineMMO.REGEN_PER_LEVEL;
                 ((IEntityDataSaver) player).getPersistentData().putFloat("regen", regen);
+                ((IEntityDataSaver) player).getPersistentData().putFloat("maxRegen", regen);
                 LevelData.addLevel(player, 1);
             }
         }
+
+        PacketByteBuf buffer = PacketByteBufs.create();
+        buffer.writeFloat(regen);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.REGEN_PACKET_ID, buffer);
+    }
+
+    public static void setRegen(ServerPlayerEntity player, int amount) {
+        float regen = amount * MineMMO.REGEN_PER_LEVEL;
+
+        ((IEntityDataSaver) player).getPersistentData().putFloat("regen", regen);
+        LevelData.addLevel(player, amount);
 
         PacketByteBuf buffer = PacketByteBufs.create();
         buffer.writeFloat(regen);

@@ -14,7 +14,11 @@ public class MineMMONetworkingConstants {
 
     // C2S
     public static final Identifier GAD_PACKET_2S_ID = new Identifier("minemmo", "gad_2s");
+    public static final Identifier GAD_PACKET_2S_LIMIT_ID = new Identifier("minemmo", "gad_limit_2s");
     public static final Identifier GMH_PACKET_2S_ID = new Identifier("minemmo", "gmh_2s");
+    public static final Identifier GMH_PACKET_2S_LIMIT_ID = new Identifier("minemmo", "gmh_limit_2s");
     public static final Identifier GMS_PACKET_2S_ID = new Identifier("minemmo", "gms_2s");
+    public static final Identifier GMS_PACKET_2S_LIMIT_ID = new Identifier("minemmo", "gms_limit_2s");
     public static final Identifier REGEN_PACKET_2S_ID = new Identifier("minemmo", "regen_2s");
+    public static final Identifier REGEN_PACKET_2S_LIMIT_ID = new Identifier("minemmo", "regen_limit_2s");
 }

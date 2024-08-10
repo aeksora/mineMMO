@@ -1,14 +1,11 @@
-package de.aeksora.minemmo.util;
+package de.aeksora.minemmo.util.hud;
 
-import de.aeksora.minemmo.MineMMO;
+import de.aeksora.minemmo.util.IEntityDataSaver;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MineMMOHud implements HudRenderCallback {
-    public static final Logger LOGGER = LoggerFactory.getLogger(MineMMO.MOD_ID);
 
     @Override
     public void onHudRender(MatrixStack matrixStack, float tickDelta) {

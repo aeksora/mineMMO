@@ -83,6 +83,7 @@ public class SyncDataS2CPacket {
                     if (buf.readableBytes() >= 4) {
                         float regen = buf.readFloat();
                         ((IEntityDataSaver) client.player).getPersistentData().putFloat("regen", regen);
+                        ((IEntityDataSaver) client.player).getPersistentData().putFloat("maxRegen", regen);
                     } else {
                         LOGGER.error("Not enough readable bytes in PacketByteBuf");
                     }
@@ -99,7 +100,7 @@ public class SyncDataS2CPacket {
     }
 
     @SuppressWarnings("unused")
-    public static void setGAD(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+    public static void receiveStrength(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
         // Retain the buffer to prevent it from being prematurely released
         buf.retain();
 
@@ -111,6 +112,7 @@ public class SyncDataS2CPacket {
                         double strength = buf.readDouble();
                         assert client.player != null;
                         Objects.requireNonNull(client.player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(strength);
+                        ((IEntityDataSaver) client.player).getPersistentData().putDouble("maxStrength", strength);
                     } else {
                         LOGGER.error("Not enough readable bytes in PacketByteBuf");
                     }
@@ -127,7 +129,7 @@ public class SyncDataS2CPacket {
     }
 
     @SuppressWarnings("unused")
-    public static void setGMH(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+    public static void receiveHealth(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
         // Retain the buffer to prevent it from being prematurely released
         buf.retain();
 
@@ -139,6 +141,7 @@ public class SyncDataS2CPacket {
                         double health = buf.readDouble();
                         assert client.player != null;
                         Objects.requireNonNull(client.player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(health);
+                        ((IEntityDataSaver) client.player).getPersistentData().putDouble("maxHealth", health);
                     } else {
                         LOGGER.error("Not enough readable bytes in PacketByteBuf");
                     }
@@ -155,7 +158,7 @@ public class SyncDataS2CPacket {
     }
 
     @SuppressWarnings("unused")
-    public static void setGMS(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+    public static void receiveSpeed(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
         // Retain the buffer to prevent it from being prematurely released
         buf.retain();
 
@@ -167,6 +170,7 @@ public class SyncDataS2CPacket {
                         double speed = buf.readDouble();
                         assert client.player != null;
                         Objects.requireNonNull(client.player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(speed);
+                        ((IEntityDataSaver) client.player).getPersistentData().putDouble("maxSpeed", speed);
                     } else {
                         LOGGER.error("Not enough readable bytes in PacketByteBuf");
                     }

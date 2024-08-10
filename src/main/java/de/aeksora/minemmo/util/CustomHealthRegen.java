@@ -33,7 +33,7 @@ public class CustomHealthRegen {
                     float maxHealth = player.getMaxHealth();
 
                     // Base regeneration rate per second (e.g., 1 health point per second)
-                    float baseRegenRatePerSecond = ((IEntityDataSaver) player).getPersistentData().getFloat("regen") + 0.25f;
+                    float baseRegenRatePerSecond = ((IEntityDataSaver) player).getPersistentData().getFloat("regen");
 
                     // Calculate regeneration per tick
                     float regenRatePerTick = baseRegenRatePerSecond / TICKS_PER_SECOND;
