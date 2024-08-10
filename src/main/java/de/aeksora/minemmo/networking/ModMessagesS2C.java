@@ -15,5 +15,6 @@ public class ModMessagesS2C {
         ClientPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.GAD_PACKET_2C_ID, SyncDataS2CPacket::receiveStrength);
         ClientPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.GMH_PACKET_2C_ID, SyncDataS2CPacket::receiveHealth);
         ClientPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.GMS_PACKET_2C_ID, SyncDataS2CPacket::receiveSpeed);
+        ClientPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.MININGSPEED_PACKET_ID, SyncDataS2CPacket::receiveMiningSpeed);
     }
 }

@@ -34,11 +34,13 @@ public class LevelingScreen extends Screen {
     public ButtonWidget button2;
     public ButtonWidget button3;
     public ButtonWidget button4;
+    public ButtonWidget button5;
 
     private NumericTextFieldWidget inputField1;
     private NumericTextFieldWidget inputField2;
     private NumericTextFieldWidget inputField3;
     private NumericTextFieldWidget inputField4;
+    private NumericTextFieldWidget inputField5;
 
     @Override
     public void init() {
@@ -55,18 +57,21 @@ public class LevelingScreen extends Screen {
         inputField2 = new NumericTextFieldWidget(centerX - 160, centerY, inputFieldWidth, buttonHeight, Text.literal(""));
         inputField3 = new NumericTextFieldWidget(centerX - 160, centerY + buttonYSpacing, inputFieldWidth, buttonHeight, Text.literal(""));
         inputField4 = new NumericTextFieldWidget(centerX - 160, centerY + 2 * buttonYSpacing, inputFieldWidth, buttonHeight, Text.literal(""));
+        inputField5 = new NumericTextFieldWidget(centerX - 160, centerY + 3 * buttonYSpacing, inputFieldWidth, buttonHeight, Text.literal(""));
 
         // Add input fields to screen
         this.addSelectableChild(inputField1);
         this.addSelectableChild(inputField2);
         this.addSelectableChild(inputField3);
         this.addSelectableChild(inputField4);
+        this.addSelectableChild(inputField5);
 
         // Set input field callbacks
         inputField1.setOnEnterPressed(() -> handleInput(inputField1, Stat.STRENGTH));
         inputField2.setOnEnterPressed(() -> handleInput(inputField2, Stat.HEALTH));
         inputField3.setOnEnterPressed(() -> handleInput(inputField3, Stat.SPEED));
         inputField4.setOnEnterPressed(() -> handleInput(inputField4, Stat.REGEN));
+        inputField5.setOnEnterPressed(() -> handleInput(inputField5, Stat.MINESPEED));
 
         // Button 1
         button1 = ButtonWidget.builder(Text.literal("Strength"), button -> {
@@ -106,8 +111,17 @@ public class LevelingScreen extends Screen {
                     PacketByteBuf buffer = PacketByteBufs.create();
                     ClientPlayNetworking.send(MineMMONetworkingConstants.REGEN_PACKET_2S_ID, buffer);
                 })
-                .dimensions(centerX - 105, centerY + 2*buttonYSpacing, buttonWidth, buttonHeight)
+                .dimensions(centerX - 105, centerY + 2 * buttonYSpacing, buttonWidth, buttonHeight)
                 .tooltip(Tooltip.of(Text.literal("Click to put a level into regeneration")))
+                .build();
+
+        // Button 5
+        button5 = ButtonWidget.builder(Text.literal("Mining Speed"), button -> {
+                    PacketByteBuf buffer = PacketByteBufs.create();
+                    ClientPlayNetworking.send(MineMMONetworkingConstants.MININGSPEED_PACKET_2S_ID, buffer);
+                })
+                .dimensions(centerX - 105, centerY + 3 * buttonYSpacing, buttonWidth, buttonHeight)
+                .tooltip(Tooltip.of(Text.literal("Click to put a level into mining speed")))
                 .build();
 
         // Add buttons to screen
@@ -115,6 +129,7 @@ public class LevelingScreen extends Screen {
         this.addDrawableChild(button2);
         this.addDrawableChild(button3);
         this.addDrawableChild(button4);
+        this.addDrawableChild(button5);
     }
 
     @Override
@@ -130,6 +145,7 @@ public class LevelingScreen extends Screen {
         inputField2.render(matrices, mouseX, mouseY, delta);
         inputField3.render(matrices, mouseX, mouseY, delta);
         inputField4.render(matrices, mouseX, mouseY, delta);
+        inputField5.render(matrices, mouseX, mouseY, delta);
 
         // Render buttons and labels
         super.render(matrices, mouseX, mouseY, delta);
@@ -147,12 +163,14 @@ public class LevelingScreen extends Screen {
         Map<String, Double> healthMap = getLevelAndStat(Stat.HEALTH);
         Map<String, Double> speedMap = getLevelAndStat(Stat.SPEED);
         Map<String, Double> regenMap = getLevelAndStat(Stat.REGEN);
+        Map<String, Double> miningMap = getLevelAndStat(Stat.MINESPEED);
 
         // Render text labels next to the buttons
         drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + strengthMap.get("level").intValue() + "/" + strengthMap.get("maxLevel").intValue() + " -> " + strengthMap.get("stat")), this.width / 2 - 20, this.height / 2 - 25, 0xFFFFFF);
         drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + healthMap.get("level").intValue() + "/" + healthMap.get("maxLevel").intValue() + " -> " + healthMap.get("stat").intValue()), this.width / 2 - 20, this.height / 2 + 5, 0xFFFFFF);
         drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + speedMap.get("level").intValue() + "/" + speedMap.get("maxLevel").intValue() + " -> " + speedMap.get("stat")), this.width / 2 - 20, this.height / 2 + 35, 0xFFFFFF);
         drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + regenMap.get("level").intValue() + "/" + regenMap.get("maxLevel").intValue() + " -> " + regenMap.get("stat")), this.width / 2 - 20, this.height / 2 + 65, 0xFFFFFF);
+        drawTextWithShadow(matrices, textRenderer, Text.literal("Lv. " + miningMap.get("level").intValue() + "/" + miningMap.get("maxLevel").intValue() + " -> " + miningMap.get("stat")), this.width / 2 - 20, this.height / 2 + 95, 0xFFFFFF);
     }
 
     public Map<String, Double> getLevelAndStat(Stat statId) {
@@ -192,6 +210,13 @@ public class LevelingScreen extends Screen {
                 level = (int) Math.round((regen - 0.25) / MineMMO.REGEN_PER_LEVEL);
                 maxLevel = (int) Math.round((maxRegen - 0.25) / MineMMO.REGEN_PER_LEVEL);
                 stat = Math.round(regen * 100.0) / 100.0;
+            }
+            case MINESPEED -> {
+                float miningSpeed = ((IEntityDataSaver) Objects.requireNonNull(player)).getPersistentData().getFloat("miningSpeed");
+                float maxMiningSpeed = ((IEntityDataSaver) Objects.requireNonNull(player)).getPersistentData().getFloat("maxMiningSpeed");
+                level = Math.round((miningSpeed - 1.0f) / MineMMO.MINESPEED_PER_LEVEL);
+                maxLevel = Math.round((maxMiningSpeed - 1.0f) / MineMMO.MINESPEED_PER_LEVEL);
+                stat = Math.round(miningSpeed * 100.0) / 100.0;
             }
             default -> {
                 level = 0;
@@ -249,6 +274,12 @@ public class LevelingScreen extends Screen {
                 ((IEntityDataSaver) Objects.requireNonNull(Objects.requireNonNull(this.client).player)).getPersistentData().putFloat("regen", (float) statVal);
                 buffer.writeFloat((float) statVal);
                 ClientPlayNetworking.send(MineMMONetworkingConstants.REGEN_PACKET_2S_LIMIT_ID, buffer);
+            }
+            case MINESPEED -> {
+                statVal = MineMMO.MINESPEED_PER_LEVEL * value + 1.0f;
+                ((IEntityDataSaver) Objects.requireNonNull(Objects.requireNonNull(this.client).player)).getPersistentData().putFloat("miningSpeed", (float) statVal);
+                buffer.writeFloat((float) statVal);
+                ClientPlayNetworking.send(MineMMONetworkingConstants.MININGSPEED_PACKET_2S_LIMIT_ID, buffer);
             }
         }
 

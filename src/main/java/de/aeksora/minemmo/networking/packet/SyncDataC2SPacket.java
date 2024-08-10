@@ -39,6 +39,11 @@ public class SyncDataC2SPacket {
     }
 
     @SuppressWarnings("unused")
+    public static void addMining2S(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+        StatModifier.addMining(player, 1);
+    }
+
+    @SuppressWarnings("unused")
     public static void setGAD2S(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
         // Retain the buffer to prevent it from being prematurely released
         buf.retain();
@@ -131,6 +136,33 @@ public class SyncDataC2SPacket {
                     if (buf.readableBytes() >= 4) {
                         float regen = buf.readFloat();
                         ((IEntityDataSaver) player).getPersistentData().putFloat("regen", regen);
+                    } else {
+                        LOGGER.error("Not enough readable bytes in PacketByteBuf");
+                    }
+                } else {
+                    LOGGER.error("Client player is null when receiving packet");
+                }
+            } catch (Exception e) {
+                LOGGER.error("Error processing PacketByteBuf", e);
+            } finally {
+                // Ensure the buffer is released to prevent memory leaks
+                buf.release();
+            }
+        });
+    }
+
+    @SuppressWarnings("unused")
+    public static void setMining2S(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
+        // Retain the buffer to prevent it from being prematurely released
+        buf.retain();
+
+        server.execute(() -> {
+            try {
+                if (player != null) {
+                    // Check if there are enough readable bytes before attempting to read
+                    if (buf.readableBytes() >= 4) {
+                        float miningSpeed = buf.readFloat();
+                        ((IEntityDataSaver) player).getPersistentData().putFloat("miningSpeed", miningSpeed);
                     } else {
                         LOGGER.error("Not enough readable bytes in PacketByteBuf");
                     }

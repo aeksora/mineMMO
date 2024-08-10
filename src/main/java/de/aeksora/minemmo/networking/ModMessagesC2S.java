@@ -15,6 +15,8 @@ public class ModMessagesC2S {
         ServerPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.GMS_PACKET_2S_LIMIT_ID, SyncDataC2SPacket::setGMS2S);
         ServerPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.REGEN_PACKET_2S_ID, SyncDataC2SPacket::addRegen2S);
         ServerPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.REGEN_PACKET_2S_LIMIT_ID, SyncDataC2SPacket::setRegen2S);
+        ServerPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.MININGSPEED_PACKET_2S_ID, SyncDataC2SPacket::addMining2S);
+        ServerPlayNetworking.registerGlobalReceiver(MineMMONetworkingConstants.MININGSPEED_PACKET_2S_LIMIT_ID, SyncDataC2SPacket::setMining2S);
     }
 
 }
