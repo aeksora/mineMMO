@@ -2,9 +2,6 @@ package de.aeksora.minemmo.networking;
 
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MineMMONetworkingConstants {
 
     // S2C
@@ -31,27 +28,21 @@ public class MineMMONetworkingConstants {
     /**
      * Used to sync strength from server to client
      */
-    public static final Identifier GAD_PACKET_2C_ID = new Identifier("minemmo", "gad_sync");
+    public static final Identifier STRENGTH_PACKET_ID = new Identifier("minemmo", "gad_sync");
 
     /**
      * Used to sync health from server to client
      */
-    public static final Identifier GMH_PACKET_2C_ID = new Identifier("minemmo", "gmh_sync");
+    public static final Identifier HEALTH_PACKET_ID = new Identifier("minemmo", "gmh_sync");
 
     /**
      * Used to sync speed from server to client
      */
-    public static final Identifier GMS_PACKET_2C_ID = new Identifier("minemmo", "gms_sync");
+    public static final Identifier SPEED_PACKET_ID = new Identifier("minemmo", "gms_sync");
 
-    // C2S
-    public static final Identifier GAD_PACKET_2S_ID = new Identifier("minemmo", "gad_2s");
-    public static final Identifier GAD_PACKET_2S_LIMIT_ID = new Identifier("minemmo", "gad_limit_2s");
-    public static final Identifier GMH_PACKET_2S_ID = new Identifier("minemmo", "gmh_2s");
-    public static final Identifier GMH_PACKET_2S_LIMIT_ID = new Identifier("minemmo", "gmh_limit_2s");
-    public static final Identifier GMS_PACKET_2S_ID = new Identifier("minemmo", "gms_2s");
-    public static final Identifier GMS_PACKET_2S_LIMIT_ID = new Identifier("minemmo", "gms_limit_2s");
-    public static final Identifier REGEN_PACKET_2S_ID = new Identifier("minemmo", "regen_2s");
-    public static final Identifier REGEN_PACKET_2S_LIMIT_ID = new Identifier("minemmo", "regen_limit_2s");
-    public static final Identifier MININGSPEED_PACKET_2S_ID = new Identifier("minemmo", "miningspeed_2s");
-    public static final Identifier MININGSPEED_PACKET_2S_LIMIT_ID = new Identifier("minemmo", "miningspeed_limit_2s");
+    public static final Identifier STRENGTH_LIMIT_ID = new Identifier("minemmo", "gad_limit_2s");
+    public static final Identifier HEALTH_LIMIT_ID = new Identifier("minemmo", "gmh_limit_2s");
+    public static final Identifier SPEED_LIMIT_ID = new Identifier("minemmo", "gms_limit_2s");
+    public static final Identifier REGEN_LIMIT_ID = new Identifier("minemmo", "regen_limit_2s");
+    public static final Identifier MININGSPEED_LIMIT_ID = new Identifier("minemmo", "miningspeed_limit_2s");
 }

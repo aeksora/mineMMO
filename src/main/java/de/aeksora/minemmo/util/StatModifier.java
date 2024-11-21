@@ -26,7 +26,7 @@ public class StatModifier {
         PacketByteBuf buffer = PacketByteBufs.create();
         assert strengthAttribute != null;
         buffer.writeDouble(strengthAttribute.getBaseValue());
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GAD_PACKET_2C_ID, buffer);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.STRENGTH_PACKET_ID, buffer);
     }
 
     public static void setStrength(ServerPlayerEntity player, int amount) {
@@ -40,7 +40,7 @@ public class StatModifier {
 
         PacketByteBuf buffer = PacketByteBufs.create();
         buffer.writeDouble(strengthAttribute.getBaseValue());
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GAD_PACKET_2C_ID, buffer);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.STRENGTH_PACKET_ID, buffer);
     }
 
     public static void addHealth(ServerPlayerEntity player, int amountToBeAdded) {
@@ -57,7 +57,7 @@ public class StatModifier {
         PacketByteBuf buffer = PacketByteBufs.create();
         assert healthAttribute != null;
         buffer.writeDouble(healthAttribute.getBaseValue());
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMH_PACKET_2C_ID, buffer);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.HEALTH_PACKET_ID, buffer);
     }
 
     public static void setHealth(ServerPlayerEntity player, int amount) {
@@ -71,7 +71,7 @@ public class StatModifier {
 
         PacketByteBuf buffer = PacketByteBufs.create();
         buffer.writeDouble(healthAttribute.getBaseValue());
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMH_PACKET_2C_ID, buffer);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.HEALTH_PACKET_ID, buffer);
     }
 
     public static void addSpeed(ServerPlayerEntity player, int amountToBeAdded) {
@@ -88,7 +88,7 @@ public class StatModifier {
         PacketByteBuf buffer = PacketByteBufs.create();
         assert speedAttribute != null;
         buffer.writeDouble(speedAttribute.getBaseValue());
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMS_PACKET_2C_ID, buffer);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.SPEED_PACKET_ID, buffer);
     }
 
     public static void setSpeed(ServerPlayerEntity player, int amount) {
@@ -102,7 +102,7 @@ public class StatModifier {
 
         PacketByteBuf buffer = PacketByteBufs.create();
         buffer.writeDouble(speedAttribute.getBaseValue());
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMS_PACKET_2C_ID, buffer);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.SPEED_PACKET_ID, buffer);
     }
 
     public static void addRegen(ServerPlayerEntity player, int amountToBeAdded) {
@@ -153,15 +153,15 @@ public class StatModifier {
     public static void syncAtributes(ServerPlayerEntity player) {
         PacketByteBuf buffer1 = PacketByteBufs.create();
         buffer1.writeDouble(Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).getBaseValue());
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GAD_PACKET_2C_ID, buffer1);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.STRENGTH_PACKET_ID, buffer1);
 
         PacketByteBuf buffer2 = PacketByteBufs.create();
         buffer2.writeDouble(Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).getValue());
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMH_PACKET_2C_ID, buffer2);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.HEALTH_PACKET_ID, buffer2);
 
         PacketByteBuf buffer3 = PacketByteBufs.create();
         buffer3.writeDouble(Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).getValue());
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.GMS_PACKET_2C_ID, buffer3);
+        ServerPlayNetworking.send(player, MineMMONetworkingConstants.SPEED_PACKET_ID, buffer3);
 
         PacketByteBuf buffer4 = PacketByteBufs.create();
         buffer4.writeFloat(((IEntityDataSaver) player).getPersistentData().getFloat("regen"));

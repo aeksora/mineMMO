@@ -76,7 +76,7 @@ public class LevelingScreen extends Screen {
         // Button 1
         button1 = ButtonWidget.builder(Text.literal("Strength"), button -> {
                     PacketByteBuf buffer = PacketByteBufs.create();
-                    ClientPlayNetworking.send(MineMMONetworkingConstants.GAD_PACKET_2S_ID, buffer);
+                    ClientPlayNetworking.send(MineMMONetworkingConstants.STRENGTH_PACKET_ID, buffer);
 
                     assert this.client != null;
                     this.client.setScreen(new LevelingScreen());
@@ -88,7 +88,7 @@ public class LevelingScreen extends Screen {
         // Button 2
         button2 = ButtonWidget.builder(Text.literal("Health"), button -> {
                     PacketByteBuf buffer = PacketByteBufs.create();
-                    ClientPlayNetworking.send(MineMMONetworkingConstants.GMH_PACKET_2S_ID, buffer);
+                    ClientPlayNetworking.send(MineMMONetworkingConstants.HEALTH_PACKET_ID, buffer);
 
                     assert this.client != null;
                     this.client.setScreen(new LevelingScreen());
@@ -100,7 +100,7 @@ public class LevelingScreen extends Screen {
         // Button 3
         button3 = ButtonWidget.builder(Text.literal("Speed"), button -> {
                     PacketByteBuf buffer = PacketByteBufs.create();
-                    ClientPlayNetworking.send(MineMMONetworkingConstants.GMS_PACKET_2S_ID, buffer);
+                    ClientPlayNetworking.send(MineMMONetworkingConstants.SPEED_PACKET_ID, buffer);
                 })
                 .dimensions(centerX - 105, centerY + buttonYSpacing, buttonWidth, buttonHeight)
                 .tooltip(Tooltip.of(Text.literal("Click to put a level into speed")))
@@ -109,7 +109,7 @@ public class LevelingScreen extends Screen {
         // Button 4
         button4 = ButtonWidget.builder(Text.literal("Regeneration"), button -> {
                     PacketByteBuf buffer = PacketByteBufs.create();
-                    ClientPlayNetworking.send(MineMMONetworkingConstants.REGEN_PACKET_2S_ID, buffer);
+                    ClientPlayNetworking.send(MineMMONetworkingConstants.REGEN_PACKET_ID, buffer);
                 })
                 .dimensions(centerX - 105, centerY + 2 * buttonYSpacing, buttonWidth, buttonHeight)
                 .tooltip(Tooltip.of(Text.literal("Click to put a level into regeneration")))
@@ -118,7 +118,7 @@ public class LevelingScreen extends Screen {
         // Button 5
         button5 = ButtonWidget.builder(Text.literal("Mining Speed"), button -> {
                     PacketByteBuf buffer = PacketByteBufs.create();
-                    ClientPlayNetworking.send(MineMMONetworkingConstants.MININGSPEED_PACKET_2S_ID, buffer);
+                    ClientPlayNetworking.send(MineMMONetworkingConstants.MININGSPEED_PACKET_ID, buffer);
                 })
                 .dimensions(centerX - 105, centerY + 3 * buttonYSpacing, buttonWidth, buttonHeight)
                 .tooltip(Tooltip.of(Text.literal("Click to put a level into mining speed")))
@@ -255,31 +255,31 @@ public class LevelingScreen extends Screen {
                 statVal = MineMMO.STRENGTH_PER_LEVEL * value + 1;
                 Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(this.client).player).getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(statVal);
                 buffer.writeDouble(statVal);
-                ClientPlayNetworking.send(MineMMONetworkingConstants.GAD_PACKET_2S_LIMIT_ID, buffer);
+                ClientPlayNetworking.send(MineMMONetworkingConstants.STRENGTH_LIMIT_ID, buffer);
             }
             case HEALTH -> {
                 statVal = MineMMO.HEALTH_PER_LEVEL * value + 20.0;
                 Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(this.client).player).getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(statVal);
                 buffer.writeDouble(statVal);
-                ClientPlayNetworking.send(MineMMONetworkingConstants.GMH_PACKET_2S_LIMIT_ID, buffer);
+                ClientPlayNetworking.send(MineMMONetworkingConstants.HEALTH_LIMIT_ID, buffer);
             }
             case SPEED -> {
                 statVal = MineMMO.SPEED_PER_LEVEL * value + 0.1;
                 Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(this.client).player).getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(statVal);
                 buffer.writeDouble(statVal);
-                ClientPlayNetworking.send(MineMMONetworkingConstants.GMS_PACKET_2S_LIMIT_ID, buffer);
+                ClientPlayNetworking.send(MineMMONetworkingConstants.SPEED_LIMIT_ID, buffer);
             }
             case REGEN -> {
                 statVal = MineMMO.REGEN_PER_LEVEL * value + 0.25f;
                 ((IEntityDataSaver) Objects.requireNonNull(Objects.requireNonNull(this.client).player)).getPersistentData().putFloat("regen", (float) statVal);
                 buffer.writeFloat((float) statVal);
-                ClientPlayNetworking.send(MineMMONetworkingConstants.REGEN_PACKET_2S_LIMIT_ID, buffer);
+                ClientPlayNetworking.send(MineMMONetworkingConstants.REGEN_LIMIT_ID, buffer);
             }
             case MINESPEED -> {
                 statVal = MineMMO.MINESPEED_PER_LEVEL * value + 1.0f;
                 ((IEntityDataSaver) Objects.requireNonNull(Objects.requireNonNull(this.client).player)).getPersistentData().putFloat("miningSpeed", (float) statVal);
                 buffer.writeFloat((float) statVal);
-                ClientPlayNetworking.send(MineMMONetworkingConstants.MININGSPEED_PACKET_2S_LIMIT_ID, buffer);
+                ClientPlayNetworking.send(MineMMONetworkingConstants.MININGSPEED_LIMIT_ID, buffer);
             }
         }
 
