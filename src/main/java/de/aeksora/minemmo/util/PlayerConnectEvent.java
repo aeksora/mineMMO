@@ -26,22 +26,20 @@ public class PlayerConnectEvent {
 
         //sync xp and level
         ServerPlayerEntity player = serverPlayNetworkHandler.getPlayer();
-        NbtCompound persistentData = ((IEntityDataSaver) player).getPersistentData();
+        StatHelper helper = new StatHelper(player);
 
-        int xp = persistentData.getInt("xp");
-        XpData.syncXp(xp, player);
-        int level = persistentData.getInt("level");
-        LevelData.syncLevel(level, player);
+        XpData.syncXp(helper.getXp(), player);
+        LevelData.syncLevel(helper.getLevel(), player);
 
         // Initialize mining speed if not already initialized
-        if (persistentData.getFloat("miningSpeed") == 0.0f) {
-            persistentData.putFloat("miningSpeed", 1.0f);
+        if (helper.getMiningSpeed() < 1.0f) {
+            helper.setMiningSpeed(1.0f);
             LOGGER.info("Set mining speed to 1.0");
         }
 
         // Initialize regen if not already initialized
-        if (persistentData.getFloat("regen") == 0.0f) {
-            persistentData.putFloat("regen", 0.25f);
+        if (helper.getRegen() == 0.0f) {
+            helper.setRegen(0.25f);
             LOGGER.info("Set regen to 0.25");
         }
 
