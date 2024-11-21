@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
@@ -29,7 +30,7 @@ public class StatHelper {
     private final Identifier xpId = MineMMONetworkingConstants.XP_PACKET_ID;
     private final Identifier levelId = MineMMONetworkingConstants.LEVEL_PACKET_ID;
     private final Identifier regenId = MineMMONetworkingConstants.REGEN_PACKET_ID;
-    private final Identifier miningId = MineMMONetworkingConstants.MININGSPEED_PACKET_ID;
+    private final Identifier miningSpeedId = MineMMONetworkingConstants.MININGSPEED_PACKET_ID;
 
     public StatHelper(PlayerEntity player) {
         this.player = player;
@@ -37,9 +38,7 @@ public class StatHelper {
     }
 
     public int getXp() {
-        int xp = persistentData.getInt("xp");
-        sync(xp, player, xpId);
-        return xp;
+        return persistentData.getInt("xp");
     }
 
     public void setXp(int xp) {
@@ -51,21 +50,34 @@ public class StatHelper {
         return persistentData.getInt("level");
     }
 
+    public void setLevel(int level) {
+        persistentData.putInt("level", level);
+        sync(level, player, levelId);
+    }
+
+    public double getStrength() {
+        return player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).getBaseValue();
+    }
+
+    public double getHealth() {
+        return player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).getBaseValue();
+    }
+
+    public double getSpeed() {
+        return player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).getBaseValue();
+    }
+
     public float getMiningSpeed() {
-        float miningSpeed = persistentData.getFloat("miningSpeed");
-        sync(miningSpeed, player, miningId);
-        return miningSpeed;
+        return persistentData.getFloat("miningSpeed");
     }
 
     public void setMiningSpeed(float miningSpeed) {
         persistentData.putFloat("miningSpeed", miningSpeed);
-        sync(miningSpeed, player, miningId);
+        sync(miningSpeed, player, miningSpeedId);
     }
 
     public float getRegen() {
-        float regen = persistentData.getFloat("regen");
-        sync(regen, player, regenId);
-        return regen;
+        return persistentData.getFloat("regen");
     }
 
     public void setRegen(float regen) {

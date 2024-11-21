@@ -106,29 +106,29 @@ public class StatModifier {
     }
 
     public static void addRegen(ServerPlayerEntity player, int amountToBeAdded) {
-        float regen = ((IEntityDataSaver) player).getPersistentData().getFloat("regen");
+        StatHelper s = new StatHelper(player);
+
+        float regen = s.getRegen();
 
         for (int i = 0; i < amountToBeAdded; i++) {
             if (XpData.removeXp((IEntityDataSaver) player, LevelData.getXpNeeded(LevelData.getLevel(player)))) {
                 regen += MineMMO.REGEN_PER_LEVEL;
-                ((IEntityDataSaver) player).getPersistentData().putFloat("regen", regen);
+                s.setRegen(regen);
                 ((IEntityDataSaver) player).getPersistentData().putFloat("maxRegen", regen);
                 LevelData.addLevel(player, 1);
             }
         }
-
-        PacketByteBuf buffer = PacketByteBufs.create();
-        buffer.writeFloat(regen);
-        ServerPlayNetworking.send(player, MineMMONetworkingConstants.REGEN_PACKET_ID, buffer);
     }
 
     public static void addMining(ServerPlayerEntity player, int amountToBeAdded) {
-        float miningSpeed = ((IEntityDataSaver) player).getPersistentData().getFloat("miningSpeed");
+        StatHelper s = new StatHelper(player);
+
+        float miningSpeed = s.getMiningSpeed();
 
         for (int i = 0; i < amountToBeAdded; i++) {
             if (XpData.removeXp((IEntityDataSaver) player, LevelData.getXpNeeded(LevelData.getLevel(player)))) {
                 miningSpeed += MineMMO.MINESPEED_PER_LEVEL;
-                ((IEntityDataSaver) player).getPersistentData().putFloat("miningSpeed", miningSpeed);
+                s.setMiningSpeed(miningSpeed);
                 ((IEntityDataSaver) player).getPersistentData().putFloat("maxMiningSpeed", miningSpeed);
                 LevelData.addLevel(player, 1);
             }
