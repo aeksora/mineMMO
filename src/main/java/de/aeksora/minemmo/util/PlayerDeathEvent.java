@@ -22,6 +22,7 @@ public class PlayerDeathEvent {
         if (!alive) {
             int level = ((IEntityDataSaver) oldPlayer).getPersistentData().getInt("level");
             ((IEntityDataSaver) newPlayer).getPersistentData().putFloat("regen", ((IEntityDataSaver) oldPlayer).getPersistentData().getFloat("regen"));
+            ((IEntityDataSaver) newPlayer).getPersistentData().putFloat("miningSpeed", ((IEntityDataSaver) oldPlayer).getPersistentData().getFloat("miningSpeed"));
             LevelData.setLevel(newPlayer, level);
             StatModifier.syncAtributes(newPlayer);
         }

@@ -33,7 +33,8 @@
     "fabric-api": "*",
     "fabric-key-binding-api-v1": "*",
     "minecraft": "~1.19.4",
-    "java": ">=17"
+    "java": ">=17",
+    "attributefix": "19.1.2"
   },
   "suggests": {
     "another-mod": "*"

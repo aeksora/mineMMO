@@ -3,6 +3,7 @@ package de.aeksora.minemmo;
 import de.aeksora.minemmo.networking.ModMessagesS2C;
 import de.aeksora.minemmo.util.hud.LevelingScreen;
 import de.aeksora.minemmo.util.hud.MineMMOHud;
+import de.aeksora.minemmo.util.hud.StatScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
@@ -17,7 +18,8 @@ public class MineMMOClient implements ClientModInitializer {
 	@SuppressWarnings("unused")
 	public static final Logger LOGGER = LoggerFactory.getLogger(MineMMO.MOD_ID);
 
-	private static KeyBinding keyBinding;
+	private static KeyBinding keyBindingLevelingScreen;
+	private static KeyBinding keyBindingStatScreen;
 
 	@Override
 	public void onInitializeClient() {
@@ -27,7 +29,7 @@ public class MineMMOClient implements ClientModInitializer {
 	}
 
 	public void initKeybinds() {
-		keyBinding = KeyBindingHelper.registerKeyBinding(
+		keyBindingLevelingScreen = KeyBindingHelper.registerKeyBinding(
 				new KeyBinding(
 						"Open Leveling Screen",
 						InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_J,
@@ -35,10 +37,24 @@ public class MineMMOClient implements ClientModInitializer {
 				)
 		);
 
+		keyBindingStatScreen = KeyBindingHelper.registerKeyBinding(
+				new KeyBinding(
+						"Open Stat Screen",
+						InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_K,
+						"MineMMO"
+				)
+		);
+
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			while (keyBinding.wasPressed()) {
+			while (keyBindingLevelingScreen.wasPressed()) {
 				System.out.println("Key pressed");
 				client.setScreen(new LevelingScreen());
+			}
+		});
+
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			while (keyBindingStatScreen.wasPressed()) {
+				client.setScreen(new StatScreen());
 			}
 		});
 	}

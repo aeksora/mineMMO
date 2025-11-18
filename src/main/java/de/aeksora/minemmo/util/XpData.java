@@ -54,7 +54,7 @@ public class XpData {
     }
 
     /**
-     * Syncs a ServerPlayerEntitys XP to the corresponding ClientPlayerEntity
+     * Syncs a ServerPlayerEntity's XP to the corresponding ClientPlayerEntity
      * @param xp the xp that should be written to the ClientPlayerEntity
      * @param player the ServerPlayerEntity
      */

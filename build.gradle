@@ -16,6 +16,11 @@ repositories {
 		name = "CottonMC"
 		url = "https://server.bbkr.space/artifactory/libs-release"
 	}
+
+	maven {
+		name = "CurseMaven"
+		url = "https://cursemaven.com"
+	}
 }
 
 dependencies {
@@ -33,6 +38,10 @@ dependencies {
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
 
 	modImplementation include("io.github.cottonmc:LibGui:${project.libgui_version}")
+
+	// AttributeFix for attributes higher than 1024
+	modCompileOnly "curse.maven:attributefix-280510:4543112"
+	modRuntimeOnly "curse.maven:attributefix-280510:4543112"
 }
 
 base {

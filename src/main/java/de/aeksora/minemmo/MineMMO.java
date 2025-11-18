@@ -31,6 +31,7 @@ public class MineMMO implements ModInitializer {
 		ModMessagesC2S.registerC2SPackages();
 		PlayerConnectEvent.register();
 		CustomHealthRegen.register();
+		EnchantmentRegisterer.register();
 	}
 
 }
