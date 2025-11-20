@@ -1,5 +1,8 @@
-package de.aeksora.minemmo.util;
+package de.aeksora.minemmo.event;
 
+import de.aeksora.minemmo.util.IEntityDataSaver;
+import de.aeksora.minemmo.util.LevelData;
+import de.aeksora.minemmo.util.StatModifier;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.network.ServerPlayerEntity;

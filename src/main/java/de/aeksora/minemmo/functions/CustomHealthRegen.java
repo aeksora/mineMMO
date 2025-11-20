@@ -1,5 +1,6 @@
-package de.aeksora.minemmo.util;
+package de.aeksora.minemmo.functions;
 
+import de.aeksora.minemmo.util.IEntityDataSaver;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;

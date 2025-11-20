@@ -2,10 +2,9 @@ package de.aeksora.minemmo.mixin;
 
 import de.aeksora.minemmo.MineMMO;
 import de.aeksora.minemmo.enchantment.FortifyStrength;
-import de.aeksora.minemmo.util.EnchantmentRegisterer;
+import de.aeksora.minemmo.functions.EnchantmentRegisterer;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import org.slf4j.Logger;

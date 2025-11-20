@@ -9,7 +9,7 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 
 public class FortifyStrength extends DamageEnchantment {
 
-    public static final int[] PERCENTAGES = {0, 2, 4, 6, 8, 10};
+    public static final int[] PERCENTAGES = {0, 5, 10, 15, 20, 25};
 
     public FortifyStrength() {
         super(Rarity.UNCOMMON, 0, EquipmentSlot.MAINHAND);

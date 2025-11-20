@@ -1,9 +1,13 @@
-package de.aeksora.minemmo.util;
+package de.aeksora.minemmo.functions;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import de.aeksora.minemmo.MineMMO;
+import de.aeksora.minemmo.util.IEntityDataSaver;
+import de.aeksora.minemmo.util.LevelData;
+import de.aeksora.minemmo.util.StatModifier;
+import de.aeksora.minemmo.util.XpData;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.server.command.CommandManager;

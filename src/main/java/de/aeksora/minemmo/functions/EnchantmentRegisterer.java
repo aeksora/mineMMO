@@ -1,4 +1,4 @@
-package de.aeksora.minemmo.util;
+package de.aeksora.minemmo.functions;
 
 import de.aeksora.minemmo.MineMMO;
 import de.aeksora.minemmo.enchantment.FortifyStrength;

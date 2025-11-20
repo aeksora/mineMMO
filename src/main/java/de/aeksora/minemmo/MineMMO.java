@@ -1,7 +1,13 @@
 package de.aeksora.minemmo;
 
+import de.aeksora.minemmo.event.MobKilledEvent;
+import de.aeksora.minemmo.event.MobSpawnEvent;
+import de.aeksora.minemmo.event.PlayerConnectEvent;
+import de.aeksora.minemmo.event.PlayerDeathEvent;
+import de.aeksora.minemmo.functions.CustomHealthRegen;
+import de.aeksora.minemmo.functions.EnchantmentRegisterer;
+import de.aeksora.minemmo.functions.XpCommand;
 import de.aeksora.minemmo.networking.ModMessagesC2S;
-import de.aeksora.minemmo.util.*;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;

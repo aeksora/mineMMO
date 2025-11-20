@@ -1,4 +1,4 @@
-package de.aeksora.minemmo.util;
+package de.aeksora.minemmo.event;
 
 import de.aeksora.minemmo.MineMMO;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;

@@ -11,3 +11,4 @@
 
 - Rework xp to qi?
   - add qi pills that can drop from enemies, that act as stored qi/xp
+  - qi absorption enchantment for more qi/xp dropped from enemies
