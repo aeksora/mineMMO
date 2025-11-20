@@ -7,6 +7,9 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 
+/**
+ * Increases damage dealt by a percentage of the players and weapons attack power
+ */
 public class FortifyStrength extends DamageEnchantment {
 
     public static final int[] PERCENTAGES = {0, 5, 10, 15, 20, 25};

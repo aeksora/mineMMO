@@ -2,6 +2,7 @@ package de.aeksora.minemmo.functions;
 
 import de.aeksora.minemmo.MineMMO;
 import de.aeksora.minemmo.enchantment.FortifyStrength;
+import de.aeksora.minemmo.enchantment.QiAbsorption;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.enchantment.Enchantment;
@@ -25,9 +26,13 @@ public class EnchantmentRegisterer {
     public static final UUID FORTIFY_STRENGTH_UUID = UUID.randomUUID();
 
     public static Enchantment FORTIFY_STRENGTH = new FortifyStrength();
+    public static Enchantment QI_ABSORPTION = new QiAbsorption();
 
     public static void register() {
-        Registry.register(Registries.ENCHANTMENT, new Identifier("minemmo", "fortify_strength"), FORTIFY_STRENGTH);
+        final String namespace = "minemmo";
+
+        Registry.register(Registries.ENCHANTMENT, new Identifier(namespace, "fortify_strength"), FORTIFY_STRENGTH);
+        Registry.register(Registries.ENCHANTMENT, new Identifier(namespace, "qi_absorption"), QI_ABSORPTION);
 
         registerTooltipEvent();
     }

@@ -1,11 +1,15 @@
 package de.aeksora.minemmo.event;
 
+import de.aeksora.minemmo.enchantment.QiAbsorption;
+import de.aeksora.minemmo.functions.EnchantmentRegisterer;
 import de.aeksora.minemmo.util.IEntityDataSaver;
 import de.aeksora.minemmo.util.XpData;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +39,21 @@ public class MobKilledEvent {
                 for (Map.Entry<UUID, Float> entry : damageMap.entrySet()) {
                     ServerPlayerEntity player1 = world.getServer().getPlayerManager().getPlayer(entry.getKey());
                     if (player1 != null) {
+
                         float damageDealt = entry.getValue();
                         int playerXp = (int) (xpDropped * (damageDealt / mob.getMaxHealth()));
-                        XpData.addXp((IEntityDataSaver) player1, playerXp);
-                        LOGGER.info("Player " + player.getName().getString() + " received " + playerXp + "/" + xpDropped + " XP");
+
+                        ItemStack stack = player1.getMainHandStack();
+                        int qiAbsorptionLevel = EnchantmentHelper.getLevel(EnchantmentRegisterer.QI_ABSORPTION, stack);
+
+                        int playerXpAfterEnchantment = (int) (playerXp * (1.0 + QiAbsorption.PERCENTAGES[qiAbsorptionLevel] / 100.0));
+
+                        XpData.addXp((IEntityDataSaver) player1, playerXpAfterEnchantment);
+
+                        // for debugging
+                        int truePercentageIncrease = (int) (((double) playerXpAfterEnchantment/(double) playerXp - 1) * 100);
+
+                        LOGGER.info("Player {} received {}(+{}%)/{} XP", player.getName().getString(), playerXpAfterEnchantment, truePercentageIncrease, xpDropped);
                     }
                 }
 
