@@ -20,6 +20,7 @@ public class MineMMOClient implements ClientModInitializer {
 
 	private static KeyBinding keyBindingLevelingScreen;
 	private static KeyBinding keyBindingStatScreen;
+	private static KeyBinding keyBindingQiGathering;
 
 	@Override
 	public void onInitializeClient() {
@@ -45,6 +46,14 @@ public class MineMMOClient implements ClientModInitializer {
 				)
 		);
 
+		keyBindingQiGathering = KeyBindingHelper.registerKeyBinding(
+			new KeyBinding(
+					"Qi Gathering",
+					InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_0,
+					"MineMMO"
+			)
+		);
+
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (keyBindingLevelingScreen.wasPressed()) {
 				System.out.println("Key pressed");
@@ -55,6 +64,12 @@ public class MineMMOClient implements ClientModInitializer {
 		ClientTickEvents.END_CLIENT_TICK.register(client -> {
 			while (keyBindingStatScreen.wasPressed()) {
 				client.setScreen(new StatScreen());
+			}
+		});
+
+		ClientTickEvents.END_CLIENT_TICK.register(client -> {
+			while (keyBindingQiGathering.isPressed()) {
+				// method call here
 			}
 		});
 	}
