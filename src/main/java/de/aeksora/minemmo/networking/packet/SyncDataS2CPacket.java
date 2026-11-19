@@ -27,8 +27,8 @@ public class SyncDataS2CPacket {
                 if (client.player != null) {
                     // Check if there are enough readable bytes before attempting to read
                     if (buf.readableBytes() >= 4) {
-                        int xp = buf.readInt();
-                        ((IEntityDataSaver) client.player).getPersistentData().putInt("xp", xp);
+                        long xp = buf.readLong();
+                        ((IEntityDataSaver) client.player).getPersistentData().putLong("xp", xp);
                     } else {
                         LOGGER.error("Not enough readable bytes in PacketByteBuf");
                     }

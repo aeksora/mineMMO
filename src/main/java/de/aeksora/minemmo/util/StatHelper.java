@@ -37,12 +37,12 @@ public class StatHelper {
         this.persistentData = ((IEntityDataSaver) player).getPersistentData();
     }
 
-    public int getXp() {
-        return persistentData.getInt("xp");
+    public long getXp() {
+        return persistentData.getLong("xp");
     }
 
-    public void setXp(int xp) {
-        persistentData.putInt("xp", xp);
+    public void setXp(long xp) {
+        persistentData.putLong("xp", xp);
         sync(xp, player, xpId);
     }
 

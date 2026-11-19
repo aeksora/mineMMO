@@ -14,12 +14,12 @@ public class XpData {
      * @param amount the amount of XP that should be added
      * @return the players XP after adding
      */
-    public static int addXp(IEntityDataSaver player, int amount) {
+    public static long addXp(IEntityDataSaver player, long amount) {
         NbtCompound nbt = player.getPersistentData();
-        int xp = nbt.getInt("xp");
+        long xp = nbt.getLong("xp");
         xp += amount;
 
-        nbt.putInt("xp", xp);
+        nbt.putLong("xp", xp);
         syncXp(xp, (ServerPlayerEntity) player);
         return xp;
     }
@@ -30,23 +30,23 @@ public class XpData {
      * @param amount the value the XP should be set to
      * @return the players XP after modifying
      */
-    public static int setXp(IEntityDataSaver player, int amount) {
+    public static long setXp(IEntityDataSaver player, long amount) {
         NbtCompound nbt = player.getPersistentData();
-        nbt.putInt("xp", amount);
+        nbt.putLong("xp", amount);
 
         syncXp(amount, (ServerPlayerEntity) player);
         return amount;
     }
 
-    public static boolean removeXp(IEntityDataSaver player, int amount) {
+    public static boolean removeXp(IEntityDataSaver player, long amount) {
         NbtCompound nbt = player.getPersistentData();
-        int xp = nbt.getInt("xp");
+        long xp = nbt.getLong("xp");
 
         if (xp < amount) {
             return false;
         } else {
             xp -= amount;
-            nbt.putInt("xp", xp);
+            nbt.putLong("xp", xp);
 
             syncXp(xp, (ServerPlayerEntity) player);
             return true;
@@ -58,9 +58,9 @@ public class XpData {
      * @param xp the xp that should be written to the ClientPlayerEntity
      * @param player the ServerPlayerEntity
      */
-    public static void syncXp(int xp, ServerPlayerEntity player) {
+    public static void syncXp(long xp, ServerPlayerEntity player) {
         PacketByteBuf buffer = PacketByteBufs.create();
-        buffer.writeInt(xp);
+        buffer.writeLong(xp);
         ServerPlayNetworking.send(player, MineMMONetworkingConstants.XP_PACKET_ID, buffer);
     }
 }

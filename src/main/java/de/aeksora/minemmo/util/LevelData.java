@@ -13,9 +13,10 @@ public class LevelData {
         return nbt.getInt("level");
     }
 
-    public static int getXpNeeded(int level) {
+    public static long getXpNeeded(int level) {
         // return (int) (Math.sqrt((xp - 1000.0) / 2.0));
-        return (int) (0.02 * Math.pow(level, 3) + 3.61 * Math.pow(level , 2) + 64.81 * level + 255.89);
+        // return (long) (0.02 * Math.pow(level, 3) + 3.61 * Math.pow(level , 2) + 64.81 * level + 255.89);
+        return (long) (0.01 * Math.pow(level, 3) + 3 * Math.pow(level , 2) + 55.0 * level + 256);
     }
 
     public static void syncLevel(int level, ServerPlayerEntity player) {
