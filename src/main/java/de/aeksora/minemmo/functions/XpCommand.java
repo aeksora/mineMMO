@@ -200,7 +200,8 @@ public class XpCommand {
             Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE)).setBaseValue(1);
             Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH)).setBaseValue(20);
             Objects.requireNonNull(player.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED)).setBaseValue(0.1);
-            ((IEntityDataSaver) player).getPersistentData().putFloat("regen", 0.0f);
+            ((IEntityDataSaver) player).getPersistentData().putFloat("regen", 0.25f);
+            ((IEntityDataSaver) player).getPersistentData().putFloat("miningSpeed", 1.0f);
 
             ((IEntityDataSaver) player).getPersistentData().putInt("level", 0);
 
